@@ -1,56 +1,56 @@
 'use strict';
+let btn = document.querySelector('.Create button');
+let shape = document.querySelectorAll('.Shape-sel select');
+let color = document.querySelectorAll('.Color-sel select');
+let items = document.querySelectorAll('.item');
 
-const currentTime = document.querySelector("h1"),
-content = document.querySelector(".content"),
-selectMenu = document.querySelectorAll("select"),
-setAlarmBtn = document.querySelector("button");
+let info = [];
+let box = [];
 
-let alarmTime, isAlarmSet,
-ringtone = new Audio("./assets/mp3/synths_and_drums.mp3");
+    for(let i = 0; i < items.length; i++) {
+        info.push(items[i]);
+    };
 
-for (let i = 23; i >= 0; i--) {
-i = i < 10 ? `0${i}` : i;
-let option = `<option value="${i}">${i}</option>`;
-selectMenu[0].firstElementChild.insertAdjacentHTML("afterend", option);
-}
+btn.addEventListener('click',function getInfo() {
+    let item = 24;
+    let shapeVar = shape.values;
+    let colorVar = color.values;
+    info.push(`${shapeVar} ${colorVar}`);
 
-for (let i = 59; i >= 0; i--) {
-i = i < 10 ? `0${i}` : i;
-let option = `<option value="${i}">${i}</option>`;
-selectMenu[1].firstElementChild.insertAdjacentHTML("afterend", option);
-}
+    box[item].style.width = '110px';
+    box[item].style.height = '110px';
 
-setInterval(() => {
-let date = new Date(),
-h = date.getHours(),
-m = date.getMinutes(),
-s = date.getSeconds();
+    if(shapeVar == 'Circle') { 
+        box[item].style.borderRadius = '50%'; 
 
-currentTime.innerText = `${h}:${m}:${s}`;
+          
+    } else {
+        box[item].style.borderRadius = '5%';
+    };
 
-if (alarmTime === `${h}:${m}`) {
-    ringtone.play();
-    ringtone.loop = true;
-}
+    switch (colorVar) {
+        case 'Blue':
+            box[item].style.backgroundColor = '#0f90f9';
+            break;
+        case 'Green':
+            box[item].style.backgroundColor = '#9f0';
+            break;
+        case 'Orange':
+            box[item].style.backgroundColor = '#f90';
+            break;
+        case 'Pink':
+            box[item].style.backgroundColor = '#f09';
+            break;
+        case 'Purple':
+            box[item].style.backgroundColor = '#90f';
+            break;
+    };
+    item = item - 1; 
 });
 
-function setAlarm() {
-if (isAlarmSet) {
-    alarmTime = "";
-    ringtone.pause();
-    content.classList.remove("disable");
-    setAlarmBtn.innerText = "Set Alarm";
-    return isAlarmSet = false;
-}
 
-let time = `${selectMenu[0].value}:${selectMenu[1].value}`;
-if (time.includes("Hour") || time.includes("Minute")) {
-    return alert("Please, select a valid time to set Alarm!");
-}
-alarmTime = time;
-isAlarmSet = true;
-content.classList.add("disable");
-setAlarmBtn.innerText = "Clear Alarm";
-}
-
-setAlarmBtn.addEventListener("click", setAlarm);
+for (let i = 0; i < box.length; i++) {
+    items[24 - i].addEventListener('click', function createShape() {
+        tip.innerHTML = `Unit ${i + 1}: ${info[i]}`;
+    })
+};
